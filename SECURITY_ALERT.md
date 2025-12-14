@@ -6,8 +6,9 @@ GitHub has detected that MongoDB credentials were exposed in this repository. **
 
 ## What Was Exposed
 
-- MongoDB Atlas connection string with username and password
-- Location: SETUP.md and potentially .env files in commit history
+- MongoDB Atlas connection string with credentials
+- Location: SETUP.md and commit history
+- **Credentials have been removed from repository but remain in git history**
 
 ## ⚠️ CRITICAL STEPS TO TAKE IMMEDIATELY
 
@@ -17,8 +18,8 @@ GitHub has detected that MongoDB credentials were exposed in this repository. **
 
 1. Go to [MongoDB Atlas](https://cloud.mongodb.com/)
 2. Navigate to Database Access
-3. Find user `sweetshop_admin`
-4. Click "Edit" and change the password
+3. Find your database user (the one with exposed credentials)
+4. Click "Edit" and change the password to a strong, unique password
 5. Update your local `.env` file with the new password
 6. **DO NOT commit the new password to git**
 
