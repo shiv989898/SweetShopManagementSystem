@@ -39,8 +39,12 @@ const startServer = async () => {
   }
 };
 
+// For local development
 if (require.main === module) {
   startServer();
 }
+
+// For Vercel serverless deployment
+export default app;
 
 export default app;
