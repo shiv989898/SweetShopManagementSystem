@@ -6,6 +6,7 @@ export interface ISweet extends Document {
   price: number;
   quantity: number;
   description?: string;
+  imageUrl?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -36,8 +37,21 @@ const sweetSchema = new Schema<ISweet>({
     type: String,
     trim: true,
   },
+  imageUrl: {
+    type: String,
+    trim: true,
+  },
 }, {
   timestamps: true,
+  toJSON: {
+    transform: function(doc, ret) {
+      const { _id, __v, ...rest } = ret;
+      return {
+        ...rest,
+        id: _id.toString()
+      };
+    }
+  }
 });
 
 export const Sweet = mongoose.model<ISweet>('Sweet', sweetSchema);

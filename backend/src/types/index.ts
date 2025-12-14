@@ -13,6 +13,7 @@ export interface Sweet {
   price: number;
   quantity: number;
   description?: string;
+  imageUrl?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

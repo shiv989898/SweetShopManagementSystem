@@ -9,29 +9,37 @@ interface EditSweetModalProps {
 }
 
 const EditSweetModal: React.FC<EditSweetModalProps> = ({ sweet, onClose, onSuccess }) => {
+  console.log('EditSweetModal rendering with sweet:', sweet);
   const [name, setName] = useState(sweet.name);
   const [category, setCategory] = useState(sweet.category);
   const [price, setPrice] = useState(sweet.price.toString());
   const [quantity, setQuantity] = useState(sweet.quantity.toString());
   const [description, setDescription] = useState(sweet.description || '');
+  const [imageUrl, setImageUrl] = useState(sweet.imageUrl || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Form submitted, updating sweet:', sweet.id);
     setError('');
     setLoading(true);
 
     try {
-      await sweetsAPI.update(sweet.id, {
+      const updateData = {
         name,
         category,
         price: parseFloat(price),
         quantity: parseInt(quantity),
         description: description || undefined,
-      });
+        imageUrl: imageUrl || undefined,
+      };
+      console.log('Sending update with data:', updateData);
+      const response = await sweetsAPI.update(sweet.id, updateData);
+      console.log('Update successful:', response.data);
       onSuccess();
     } catch (err: any) {
+      console.error('Update failed:', err);
       setError(err.response?.data?.error || 'Failed to update sweet');
     } finally {
       setLoading(false);
@@ -92,6 +100,16 @@ const EditSweetModal: React.FC<EditSweetModalProps> = ({ sweet, onClose, onSucce
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="imageUrl">Image URL (Optional)</label>
+            <input
+              type="url"
+              id="imageUrl"
+              placeholder="https://example.com/image.jpg"
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
             />
           </div>
           <div className="modal-actions">

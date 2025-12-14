@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sweet, sweetsAPI } from '../api/api';
 import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 import SweetCard from '../components/SweetCard';
 import AddSweetModal from '../components/AddSweetModal';
 import EditSweetModal from '../components/EditSweetModal';
+import Cart from '../components/Cart';
 import '../styles/Dashboard.css';
 
 const Dashboard: React.FC = () => {
@@ -17,8 +19,10 @@ const Dashboard: React.FC = () => {
   const [maxPrice, setMaxPrice] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showCart, setShowCart] = useState(false);
   const [selectedSweet, setSelectedSweet] = useState<Sweet | null>(null);
   const { user, logout, isAdmin } = useAuth();
+  const { getTotalItems } = useCart();
   const navigate = useNavigate();
 
   const fetchSweets = async () => {
@@ -72,15 +76,6 @@ const Dashboard: React.FC = () => {
     navigate('/login');
   };
 
-  const handlePurchase = async (id: number) => {
-    try {
-      await sweetsAPI.purchase(id);
-      fetchSweets();
-    } catch (error: any) {
-      alert(error.response?.data?.error || 'Purchase failed');
-    }
-  };
-
   const handleDelete = async (id: number) => {
     if (window.confirm('Are you sure you want to delete this sweet?')) {
       try {
@@ -102,6 +97,8 @@ const Dashboard: React.FC = () => {
   };
 
   const handleEdit = (sweet: Sweet) => {
+    console.log('handleEdit called with:', sweet);
+    console.log('Setting selectedSweet and showEditModal to true');
     setSelectedSweet(sweet);
     setShowEditModal(true);
   };
@@ -118,6 +115,11 @@ const Dashboard: React.FC = () => {
         <div className="header-content">
           <h1>🍬 Sweet Shop Dashboard</h1>
           <div className="user-info">
+            {!isAdmin && (
+              <button onClick={() => setShowCart(true)} className="btn-cart">
+                🛒 Cart ({getTotalItems()})
+              </button>
+            )}
             <span>{user?.email} {isAdmin && <span className="admin-badge">Admin</span>}</span>
             <button onClick={handleLogout} className="btn-secondary">Logout</button>
           </div>
@@ -175,7 +177,6 @@ const Dashboard: React.FC = () => {
                 key={sweet.id}
                 sweet={sweet}
                 isAdmin={isAdmin}
-                onPurchase={handlePurchase}
                 onDelete={handleDelete}
                 onRestock={handleRestock}
                 onEdit={handleEdit}
@@ -205,6 +206,16 @@ const Dashboard: React.FC = () => {
           onSuccess={() => {
             setShowEditModal(false);
             setSelectedSweet(null);
+            fetchSweets();
+          }}
+        />
+      )}
+
+      {showCart && (
+        <Cart
+          onClose={() => setShowCart(false)}
+          onCheckoutSuccess={() => {
+            setShowCart(false);
             fetchSweets();
           }}
         />

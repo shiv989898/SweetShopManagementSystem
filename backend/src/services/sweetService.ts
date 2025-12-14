@@ -2,25 +2,40 @@ import { Sweet as SweetModel } from '../models/Sweet';
 import { Sweet } from '../types';
 
 export class SweetService {
-  async createSweet(name: string, category: string, price: number, quantity: number, description?: string): Promise<any> {
+  async createSweet(name: string, category: string, price: number, quantity: number, description?: string, imageUrl?: string): Promise<any> {
     const sweet = await SweetModel.create({
       name,
       category,
       price,
       quantity,
       description,
+      imageUrl,
     });
-    return sweet;
+    const plainSweet = sweet.toObject();
+    return {
+      ...plainSweet,
+      id: sweet._id.toString(),
+      _id: undefined
+    };
   }
 
   async getAllSweets(): Promise<any[]> {
-    const sweets = await SweetModel.find().sort({ createdAt: -1 });
-    return sweets;
+    const sweets = await SweetModel.find().sort({ createdAt: -1 }).lean();
+    return sweets.map(sweet => ({
+      ...sweet,
+      id: sweet._id.toString(),
+      _id: undefined
+    }));
   }
 
   async getSweetById(id: string): Promise<any | null> {
-    const sweet = await SweetModel.findById(id);
-    return sweet;
+    const sweet = await SweetModel.findById(id).lean();
+    if (!sweet) return null;
+    return {
+      ...sweet,
+      id: sweet._id.toString(),
+      _id: undefined
+    };
   }
 
   async searchSweets(searchTerm?: string, category?: string, minPrice?: number, maxPrice?: number): Promise<any[]> {
@@ -44,8 +59,12 @@ export class SweetService {
       }
     }
 
-    const sweets = await SweetModel.find(query).sort({ createdAt: -1 });
-    return sweets;
+    const sweets = await SweetModel.find(query).sort({ createdAt: -1 }).lean();
+    return sweets.map(sweet => ({
+      ...sweet,
+      id: sweet._id.toString(),
+      _id: undefined
+    }));
   }
 
   async updateSweet(id: string, updates: Partial<Sweet>): Promise<any | null> {
@@ -53,8 +72,13 @@ export class SweetService {
       id,
       { $set: updates },
       { new: true, runValidators: true }
-    );
-    return sweet;
+    ).lean();
+    if (!sweet) return null;
+    return {
+      ...sweet,
+      id: sweet._id.toString(),
+      _id: undefined
+    };
   }
 
   async deleteSweet(id: string): Promise<boolean> {
@@ -76,7 +100,12 @@ export class SweetService {
     sweet.quantity -= quantity;
     await sweet.save();
 
-    return sweet;
+    const plainSweet = sweet.toObject();
+    return {
+      ...plainSweet,
+      id: sweet._id.toString(),
+      _id: undefined
+    };
   }
 
   async restockSweet(id: string, quantity: number): Promise<any | null> {
@@ -89,6 +118,11 @@ export class SweetService {
     sweet.quantity += quantity;
     await sweet.save();
 
-    return sweet;
+    const plainSweet = sweet.toObject();
+    return {
+      ...plainSweet,
+      id: sweet._id.toString(),
+      _id: undefined
+    };
   }
 }

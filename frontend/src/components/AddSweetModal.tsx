@@ -13,6 +13,7 @@ const AddSweetModal: React.FC<AddSweetModalProps> = ({ onClose, onSuccess }) => 
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
   const [description, setDescription] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -28,6 +29,7 @@ const AddSweetModal: React.FC<AddSweetModalProps> = ({ onClose, onSuccess }) => 
         price: parseFloat(price),
         quantity: parseInt(quantity),
         description: description || undefined,
+        imageUrl: imageUrl || undefined,
       });
       onSuccess();
     } catch (err: any) {
@@ -91,6 +93,16 @@ const AddSweetModal: React.FC<AddSweetModalProps> = ({ onClose, onSuccess }) => 
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="imageUrl">Image URL (Optional)</label>
+            <input
+              type="url"
+              id="imageUrl"
+              placeholder="https://example.com/image.jpg"
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
             />
           </div>
           <div className="modal-actions">

@@ -21,7 +21,7 @@ api.interceptors.request.use((config) => {
 export interface User {
   id: number;
   email: string;
-  is_admin: boolean;
+  isAdmin: boolean;
 }
 
 export interface Sweet {
@@ -31,6 +31,7 @@ export interface Sweet {
   price: number;
   quantity: number;
   description?: string;
+  imageUrl?: string;
   created_at: string;
   updated_at: string;
 }
