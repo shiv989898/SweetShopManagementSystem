@@ -17,25 +17,14 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/sweets', sweetRoutes);
-
-// Connect to database before handling any request (for serverless)
-app.use(async (req, res, next) => {
-  try {
-    await connectDatabase();
-    next();
-  } catch (error) {
-    console.error('Database connection failed:', error);
-    res.status(500).json({ error: 'Database connection failed' });
-  }
-});
-
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Sweet Shop API is running' });
 });
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/sweets', sweetRoutes);
 
 // Initialize database and start server
 const startServer = async () => {
@@ -50,10 +39,4 @@ const startServer = async () => {
   }
 };
 
-// For local development
-if (require.main === module) {
-  startServer();
-}
-
-// For Vercel serverless deployment
-export default app;
+startServer();
