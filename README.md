@@ -2,6 +2,20 @@
 
 A full-stack web application built using Test-Driven Development (TDD) principles for managing a sweet shop's inventory, user authentication, and shopping cart functionality. This project demonstrates modern web development practices, clean code architecture, and effective use of AI tools in the development workflow.
 
+## 🌐 Live Deployment
+
+**🚀 Frontend**: [https://sweet-shop-management-system-theta.vercel.app](https://sweet-shop-management-system-theta.vercel.app)
+
+**🔗 Backend API**: [https://sweetshopmanagementsystem-4x8q.onrender.com](https://sweetshopmanagementsystem-4x8q.onrender.com)
+
+**👤 Demo Admin Account**:
+- Email: `admin@sweetshop.com`
+- Password: `admin123`
+
+> **Note**: Backend is hosted on Render's free tier. First request may take 30-60 seconds as the service wakes up from sleep.
+
+---
+
 ## 📋 Table of Contents
 - [Project Overview](#project-overview)
 - [Features](#features)
