@@ -1,0 +1,164 @@
+.sweet-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.sweet-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.sweet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+.sweet-header h3 {
+  color: #2d3748;
+  font-size: 20px;
+  margin: 0;
+  flex: 1;
+}
+
+.category-badge {
+  background: #e6fffa;
+  color: #234e52;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.sweet-description {
+  color: #718096;
+  font-size: 14px;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.sweet-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 12px 0;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+  color: #667eea;
+}
+
+.quantity {
+  font-size: 14px;
+  font-weight: 600;
+  color: #48bb78;
+  background: #f0fff4;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.quantity.out-of-stock {
+  color: #f56565;
+  background: #fff5f5;
+}
+
+.sweet-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-purchase {
+  flex: 1;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-purchase:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-purchase:disabled {
+  background: #cbd5e0;
+  cursor: not-allowed;
+}
+
+.btn-edit,
+.btn-restock,
+.btn-delete {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-edit {
+  background: #4299e1;
+  color: white;
+}
+
+.btn-edit:hover {
+  background: #3182ce;
+}
+
+.btn-restock {
+  background: #48bb78;
+  color: white;
+}
+
+.btn-restock:hover {
+  background: #38a169;
+}
+
+.btn-delete {
+  background: #f56565;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #e53e3e;
+}
+
+.restock-panel {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 2px solid #e2e8f0;
+  display: flex;
+  gap: 8px;
+}
+
+.restock-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.btn-confirm {
+  background: #48bb78;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+}
